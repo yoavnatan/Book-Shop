@@ -12,19 +12,22 @@ body {
     border: 1px solid grey;
     border-collapse: collapse;
     text-align: left;
+
+    width: 80vw;
 }
 
 th,
 td {
     border: 1px solid rgb(160 160 160);
     padding: .7em 1em;
+    /* padding-inline-end: 0; */
 
 }
 
 td span {
 
     /* padding-inline-start: 1em; */
-    margin-inline-end: .5em;
+    margin-inline-end: .3em;
     padding: .1em .3em
 }
 
