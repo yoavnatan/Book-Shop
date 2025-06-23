@@ -9,4 +9,3 @@ var gBooks = [
 function getBooks() {
     return gBooks
 }
-
