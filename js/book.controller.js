@@ -23,15 +23,15 @@ function render() {
 }
 
 
-function onRemoveBook(bookIdx) {
-    removeBook(bookIdx)
+function onRemoveBook(bookId) {
+    removeBook(bookId)
     render()
 }
 
 
-function onUpdateBook(bookIdx) {
+function onUpdateBook(bookId) {
     const newPrice = prompt('Insert a new price')
-    updatePrice(bookIdx, newPrice)
+    updatePrice(bookId, newPrice)
     render()
 
 }
@@ -43,12 +43,21 @@ function onAddBook() {
     render()
 }
 
-function onReadBook(bookIdx) {
+function onReadBook(bookId) {
     const elDetailsModal = document.querySelector('.details-modal')
-    const elDetails = document.querySelector('pre')
+    const elDetails = document.querySelector('.book-description')
+    const elPrice = document.querySelector('.book-price span')
+    const elTitle = document.querySelector('.book-title')
+    const elImg = document.querySelector('.details-modal span')
 
-    const book = getBookById(bookIdx)
-    elDetails.innerText = JSON.stringify(book)
+    const book = getBookById(bookId)
+    if (book.img) {
+        elImg.innerHTML = `<img src="${book.img}">`
+        elDetails.innerText = book.description
+        elPrice.innerText = book.price
+        elTitle.innerText = book.title
+    }
+    else elDetails.innerText = JSON.stringify(book)
     elDetailsModal.showModal()
 }
 

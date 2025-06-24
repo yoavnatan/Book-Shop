@@ -56,3 +56,17 @@ thead {
 tbody tr:nth-child(odd) {
     background-color: rgb(240, 240, 240);
 }
+
+
+
+img {
+    width: 200px;
+}
+
+.details-modal button {
+
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+}
