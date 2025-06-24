@@ -2,9 +2,15 @@
 
 var gBooks
 _createBooks()
+console.log(gBooks)
 
 function getBooks() {
     return gBooks
+}
+
+function getBookById(bookIdx) {
+    return gBooks.find(book => book.id === bookIdx)
+
 }
 
 function removeBook(bookIdx) {
@@ -13,15 +19,20 @@ function removeBook(bookIdx) {
 }
 
 function updatePrice(bookIdx, newPrice) {
+    console.log('bookIdx', bookIdx)
     const book = gBooks.find(book => book.id === bookIdx)
+    console.log(book)
     book.price = newPrice
+
+    return book
 }
 
 function addBook(title, price) {
 
-    const book = _createBook(title, price)
-    gBooks.push(book)
+    const newBook = _createBook(title, price)
+    gBooks.push(newBook)
 
+    return newBook
 }
 
 function _createBooks() {
@@ -29,7 +40,7 @@ function _createBooks() {
     gBooks = [
         _createBook('The Adventures of Lori Ipsi', 120),
         _createBook('World Atlas', 300),
-        _createBook('Zorba the Greek', 87),
+        _createBook('Zorba the Greek', 87)
     ]
 }
 
