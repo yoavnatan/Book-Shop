@@ -1,5 +1,7 @@
 'use strict'
 
+var gFilterBy = ''
+
 function onInit() {
     render()
 }
@@ -8,7 +10,7 @@ function onInit() {
 function render() {
 
     const elBooksTable = document.querySelector('.main tbody')
-    const books = getBooks()
+    const books = getBooks(gFilterBy)
 
     var strHTML = books.map(book => `
             <tr>
@@ -20,6 +22,18 @@ function render() {
                 </td>
             </tr>`)
     elBooksTable.innerHTML = strHTML.join('')
+}
+
+function onSearchBook(elFilterBy) {
+    gFilterBy = elFilterBy.value
+    render()
+}
+
+function onClearClicked() {
+    const elSearchLine = document.querySelector('input')
+    elSearchLine.value = ''
+    gFilterBy = ''
+    render()
 }
 
 
@@ -60,6 +74,7 @@ function onReadBook(bookId) {
     else elDetails.innerText = JSON.stringify(book)
     elDetailsModal.showModal()
 }
+
 
 
 

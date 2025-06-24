@@ -6,8 +6,11 @@ var gBooks
 _createBooks()
 console.log(gBooks)
 
-function getBooks() {
-    return gBooks
+function getBooks(filterBy) {
+    if (!filterBy) return gBooks
+
+    return gBooks.filter(book => book.title.toLowerCase().includes(filterBy.toLowerCase()))
+
 }
 
 function getBookById(bookId) {
@@ -66,3 +69,4 @@ function _createBook(title, price, img, description) {
 function _saveBooks() {
     saveToStorage(STORAGE_KEY, gBooks)
 }
+
