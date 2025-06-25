@@ -9,7 +9,7 @@ function onInit() {
 
 function render() {
 
-    const elBooksTable = document.querySelector('.main tbody')
+    const elBooksTable = document.querySelector('.main-container tbody')
     const books = getBooks(gFilterBy)
 
     var strHTML = books.map(book => `
@@ -39,7 +39,13 @@ function onClearClicked() {
 
 function onRemoveBook(bookId) {
     removeBook(bookId)
+    document.querySelector('.modal').innerText = 'The book has been deleted'
+    showElement('.modal')
+
     render()
+
+    setTimeout(() => hideElement('.modal'), 2000)
+
 }
 
 
