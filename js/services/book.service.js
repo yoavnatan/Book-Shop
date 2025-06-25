@@ -26,7 +26,7 @@ function removeBook(bookId) {
 
 function updatePrice(bookId, newPrice) {
     console.log('bookId', bookId)
-    const book = gBooks.find(book => book.id === bookId)
+    const book = getBookById(bookId)
     console.log(book)
     book.price = newPrice
 
@@ -70,3 +70,6 @@ function _saveBooks() {
     saveToStorage(STORAGE_KEY, gBooks)
 }
 
+function rateBook(bookId) {
+    book = getBookById(bookId)
+}

@@ -11,7 +11,10 @@
 <body onload="onInit()">
 
     <div class="modal hide"></div>
-    <table class="main-container">
+    <button class="cards-view" onclick="onCardsView()">&#9782;</button>
+    <button class="table-view" onclick="onTableView()">&#9783;</button>
+
+    <table class="table-container">
         <thead>
             <tr>
                 <th>title</th>
@@ -23,10 +26,19 @@
         </tbody>
     </table>
 
+    <div class="cards-container hide">
+
+    </div>
+
     <button class="btn-add" onclick="onAddBook()">add</button>
     <input type="text" oninput="onSearchBook(this)" placeholder="search books">
     <button class="clear" onclick="onClearClicked()">clear</button>
 
+    <footer>
+        <div class="expensive-books"><span></span> Expensive books</div>
+        <div class="avarage-books"><span></span> Avarage costs books</div>
+        <div class="cheap-books"><span></span> Cheap books</div>
+    </footer>
     <dialog class="details-modal">
         <form method="dialog">
             <button>x</button>
@@ -35,6 +47,9 @@
             <pre></pre>
             <p class="book-description"></p>
             <h2 class="book-price"><span></span>$</h2>
+            <button onclick="onChangeRate(event,-1)">-</button>
+            <span class="rate">0</span>
+            <button onclick="onChangeRate(event,1)">+</button>
         </form>
     </dialog>
 
