@@ -11,15 +11,21 @@ function onInit() {
 function render() {
 
     if (gLayout === 'cards') {
+
         const elBooksCard = document.querySelector('.cards-container')
         const books = getBooks(gFilterBy)
 
         var strHTML = books.map(book => `<div class="card">
+
+
+<img alt="No image" src="${book.img}">
             <div class="title">${book.title}</div>
-            <div class="price">${book.price}</div>
+            <div class="price">${book.price}$</div>
+            <div class="btns-conatiner">
             <span class="button btn-read" onclick="onReadBook('${book.id}')">Read</span>
                 <span class="button btn-update" onclick="onUpdateBook('${book.id}')">Update</span>
                 <span class="button btn-delete" onclick="onRemoveBook('${book.id}')">Delete</span>
+                </div>
             </div>
             `
         )
@@ -28,7 +34,7 @@ function render() {
         elBooksCard.innerHTML = strHTML.join('')
         return
     }
-
+    showElement('.table-container')
     const elBooksTable = document.querySelector('.table-container tbody')
     const books = getBooks(gFilterBy)
 

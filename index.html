@@ -14,10 +14,12 @@
         <div class="modal hide"></div>
         <button class="cards-view" onclick="onCardsView()">&#9783;</button>
         <button class="table-view" onclick="onTableView()">&#9782;</button>
+        <h2>Books</h2>
     </header>
 
-    <main>
-        <table class="table-container">
+    <section class="main-container">
+
+        <table class="table-container hide">
             <thead>
                 <tr>
                     <th>title</th>
@@ -30,11 +32,14 @@
         </table>
         <div class="cards-container hide">
         </div>
-        <button class="btn-add" onclick="onAddBook()">add</button>
-        <button class="btn-add-modal" onclick="onAddBookByModal()">add By modal</button>
-        <input type="text" oninput="onSearchBook(this)" placeholder="search books">
-        <button class="clear" onclick="onClearClicked()">clear</button>
-    </main>
+        <div class="nav-group">
+            <button class="btn-add" onclick="onAddBook()">add</button>
+            <button class="btn-add-modal" onclick="onAddBookByModal()">add By modal</button>
+            <input type="text" oninput="onSearchBook(this)" placeholder="search books">
+            <button class="clear" onclick="onClearClicked()">clear</button>
+        </div>
+
+    </section>
 
     <footer>
         <div class="expensive-books"><span></span> Expensive books</div>
