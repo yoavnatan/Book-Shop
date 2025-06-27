@@ -35,8 +35,11 @@ header>h2 {
 }
 
 .main-container {
-    display: grid;
-    place-content: center;
+    display: flex;
+    flex-direction: column;
+    /* place-content: center; */
+    align-items: center;
+
 
     margin: 100px auto;
 
@@ -65,7 +68,7 @@ textarea:focus {
     box-shadow: 0px 0px 5px 0px #00000091;
     /* border-collapse: collapse; */
     text-align: left;
-    margin: 100px;
+    margin: 20px;
     width: min(70vw, 620px);
     min-width: 620px;
 
@@ -189,7 +192,7 @@ main>button {
     display: flex;
 
     justify-content: center;
-    align-content: center;
+    align-content: start;
     flex-wrap: wrap;
 
     margin: 50px;

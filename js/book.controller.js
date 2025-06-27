@@ -10,31 +10,37 @@ function onInit() {
 
 function render() {
 
-    if (gLayout === 'cards') {
+    if (gLayout === 'cards') renderCards()
+    if (gLayout === 'table') renderBooks()
+    _renderstats()
 
-        const elBooksCard = document.querySelector('.cards-container')
-        const books = getBooks(gFilterBy)
+}
+function renderCards() {
 
-        var strHTML = books.map(book => `<div class="card">
+    const elBooksCard = document.querySelector('.cards-container')
+    const books = getBooks(gFilterBy)
+
+    var strHTML = books.map(book => `<div class="card">
 
 
 <img alt="No image" src="${book.img}">
-            <div class="title">${book.title}</div>
-            <div class="price">${book.price}$</div>
-            <div class="btns-conatiner">
-            <span class="button btn-read" onclick="onReadBook('${book.id}')">Read</span>
-                <span class="button btn-update" onclick="onUpdateBook('${book.id}')">Update</span>
-                <span class="button btn-delete" onclick="onRemoveBook('${book.id}')">Delete</span>
-                </div>
+        <div class="title">${book.title}</div>
+        <div class="price">${book.price}$</div>
+        <div class="btns-conatiner">
+        <span class="button btn-read" onclick="onReadBook('${book.id}')">Read</span>
+            <span class="button btn-update" onclick="onUpdateBook('${book.id}')">Update</span>
+            <span class="button btn-delete" onclick="onRemoveBook('${book.id}')">Delete</span>
             </div>
-            `
-        )
-        elBooksCard.style.display = 'flex'
+        </div>
+        `
+    )
+    elBooksCard.style.display = 'flex'
+    elBooksCard.innerHTML = strHTML.join('')
+    hideElement('.table-container')
+    showElement('.cards-container')
+}
 
-        elBooksCard.innerHTML = strHTML.join('')
-        return
-    }
-    showElement('.table-container')
+function renderBooks() {
     const elBooksTable = document.querySelector('.table-container tbody')
     const books = getBooks(gFilterBy)
 
@@ -43,7 +49,6 @@ function render() {
         _renderstats()
         return
     }
-
 
     var strHTML = books.map(book => `
             <tr>
@@ -55,11 +60,13 @@ function render() {
                 </td>
             </tr>`)
     elBooksTable.innerHTML = strHTML.join('')
+    document.querySelector('.cards-container').style.display = 'none'
 
+    hideElement('.cards-container')
+    showElement('.table-container')
 
-
-    _renderstats()
 }
+
 
 function onSearchBook(elFilterBy) {
     gFilterBy = elFilterBy.value
@@ -155,7 +162,6 @@ function onCardsView() {
 function onTableView() {
 
     gLayout = 'table'
-    showElement('.table-container')
     document.querySelector('.cards-container').style.display = 'none'
     render()
     saveToStorage('viewKey', 'table')
@@ -189,7 +195,7 @@ function onSubmit() {
     const bookTitle = document.getElementById('booktitle').value
     const bookprice = document.getElementById('bookprice').value
     const imgUrl = document.getElementById('bookimage').value
-    addBook(bookTitle, bookprice)
+    addBook(bookTitle, bookprice, imgUrl)
     render()
 
 }
