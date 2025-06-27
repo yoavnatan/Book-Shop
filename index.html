@@ -10,35 +10,52 @@
 
 <body onload="onInit()">
 
-    <div class="modal hide"></div>
-    <button class="cards-view" onclick="onCardsView()">&#9783;</button>
-    <button class="table-view" onclick="onTableView()">&#9782;</button>
+    <header>
+        <div class="modal hide"></div>
+        <button class="cards-view" onclick="onCardsView()">&#9783;</button>
+        <button class="table-view" onclick="onTableView()">&#9782;</button>
+    </header>
 
-    <table class="table-container">
-        <thead>
-            <tr>
-                <th>title</th>
-                <th>price</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-
-    <div class="cards-container hide">
-
-    </div>
-
-    <button class="btn-add" onclick="onAddBook()">add</button>
-    <input type="text" oninput="onSearchBook(this)" placeholder="search books">
-    <button class="clear" onclick="onClearClicked()">clear</button>
+    <main>
+        <table class="table-container">
+            <thead>
+                <tr>
+                    <th>title</th>
+                    <th>price</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="cards-container hide">
+        </div>
+        <button class="btn-add" onclick="onAddBook()">add</button>
+        <button class="btn-add-modal" onclick="onAddBookByModal()">add By modal</button>
+        <input type="text" oninput="onSearchBook(this)" placeholder="search books">
+        <button class="clear" onclick="onClearClicked()">clear</button>
+    </main>
 
     <footer>
         <div class="expensive-books"><span></span> Expensive books</div>
         <div class="avarage-books"><span></span> Avarage costs books</div>
         <div class="cheap-books"><span></span> Cheap books</div>
     </footer>
+
+    <dialog class="update-modal">
+        <form method="dialog">
+            <button>x</button>
+            <h1>Add a Book</h1>
+            <label for="booktitle">book title:</label>
+            <input type="text" id="booktitle" placeholder="book name">
+            <label for="bookprice">Price:</label>
+            <input type="number" id="bookprice" step="0.5" placeholder="book price" oninput="onInputPrice(this)">
+            <label for="bookimage">Image:</label>
+            <input type="url" id="bookimage" placeholder="url">
+            <button onclick="onSubmit()">Submit</button>
+        </form>
+    </dialog>
+
     <dialog class="details-modal">
         <form method="dialog">
             <button>x</button>
@@ -52,7 +69,6 @@
             <button onclick="onChangeRate(event,1)">+</button>
         </form>
     </dialog>
-
 
     <script src="js/services/utils.service.js"></script>
     <script src="js/services/storage.service.js"></script>

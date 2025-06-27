@@ -95,6 +95,11 @@ function onAddBook() {
     render()
 }
 
+function onAddBookByModal() {
+    const elAddModal = document.querySelector('.update-modal')
+    elAddModal.showModal()
+}
+
 function onReadBook(bookId) {
     const elDetailsModal = document.querySelector('.details-modal')
     const elDetails = document.querySelector('.book-description')
@@ -168,3 +173,17 @@ function onChangeRate(ev, diff) {
 
 }
 
+function onInputPrice(elPriceInput) {
+
+    var price = +elPriceInput.value
+    elPriceInput.value = price.toFixed(2)
+}
+
+function onSubmit() {
+    const bookTitle = document.getElementById('booktitle').value
+    const bookprice = document.getElementById('bookprice').value
+    const imgUrl = document.getElementById('bookimage').value
+    addBook(bookTitle, bookprice)
+    render()
+
+}

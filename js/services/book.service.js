@@ -77,3 +77,9 @@ function updateRating(bookId, diff) {
     _saveBooks()
     return book
 }
+
+function addBookByModal(title, price) {
+    addBook(title, price)
+    _saveBooks
+
+}
