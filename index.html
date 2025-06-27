@@ -11,8 +11,8 @@
 <body onload="onInit()">
 
     <div class="modal hide"></div>
-    <button class="cards-view" onclick="onCardsView()">&#9782;</button>
-    <button class="table-view" onclick="onTableView()">&#9783;</button>
+    <button class="cards-view" onclick="onCardsView()">&#9783;</button>
+    <button class="table-view" onclick="onTableView()">&#9782;</button>
 
     <table class="table-container">
         <thead>
@@ -48,7 +48,7 @@
             <p class="book-description"></p>
             <h2 class="book-price"><span></span>$</h2>
             <button onclick="onChangeRate(event,-1)">-</button>
-            <span class="rate">0</span>
+            <div class="book-rate"><span></span></div>
             <button onclick="onChangeRate(event,1)">+</button>
         </form>
     </dialog>

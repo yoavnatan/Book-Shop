@@ -63,6 +63,7 @@ function _createBook(title, price, img, description) {
         price,
         img,
         description,
+        rate: 0,
     }
 }
 
@@ -70,6 +71,9 @@ function _saveBooks() {
     saveToStorage(STORAGE_KEY, gBooks)
 }
 
-function rateBook(bookId) {
-    book = getBookById(bookId)
+function updateRating(bookId, diff) {
+    const book = getBookById(bookId)
+    book.rate += diff
+    _saveBooks()
+    return book
 }

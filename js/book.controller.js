@@ -101,15 +101,21 @@ function onReadBook(bookId) {
     const elPrice = document.querySelector('.book-price span')
     const elTitle = document.querySelector('.book-title')
     const elImg = document.querySelector('.details-modal span')
+    const elRate = document.querySelector('.book-rate span')
 
     const book = getBookById(bookId)
+
+    console.log('book.rate', book.rate)
     if (book.img) {
         elImg.innerHTML = `<img src="${book.img}">`
         elDetails.innerText = book.description
         elPrice.innerText = book.price
         elTitle.innerText = book.title
+        elRate.innerText = book.rate
     }
     else elDetails.innerText = JSON.stringify(book)
+
+    elDetailsModal.dataset.bookId = bookId
     elDetailsModal.showModal()
 }
 
@@ -148,10 +154,17 @@ function onTableView() {
 function onChangeRate(ev, diff) {
     ev.preventDefault()
 
-    var rate = +document.querySelector('.rate').innerText
-    rate += diff
+    const elBookModal = document.querySelector('.details-modal')
+    const bookId = elBookModal.dataset.bookId
+    const book = updateRating(bookId, +diff)
 
-    document.querySelector('.rate').innerText = rate
+    elBookModal.querySelector('.book-rate span').innerText = book.rate
+
+
+    // var rate = +document.querySelector('.rate').innerText
+    // rate += diff
+
+    // document.querySelector('.rate').innerText = rate
 
 }
 
