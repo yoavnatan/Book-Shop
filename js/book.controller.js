@@ -11,7 +11,7 @@ function onInit() {
 function render() {
 
     if (gLayout === 'cards') renderCards()
-    if (gLayout === 'table') renderBooks()
+    if (gLayout === 'table') renderTable()
     _renderstats()
 
 }
@@ -26,6 +26,7 @@ function renderCards() {
 <img alt="No image" src="${book.img}">
         <div class="title">${book.title}</div>
         <div class="price">${book.price}$</div>
+        <div class="rate">${book.rate} ⭐️</div>
         <div class="btns-conatiner">
         <span class="button btn-read" onclick="onReadBook('${book.id}')">Read</span>
             <span class="button btn-update" onclick="onUpdateBook('${book.id}')">Update</span>
@@ -40,12 +41,12 @@ function renderCards() {
     showElement('.cards-container')
 }
 
-function renderBooks() {
+function renderTable() {
     const elBooksTable = document.querySelector('.table-container tbody')
     const books = getBooks(gFilterBy)
 
     if (!gBooks || gBooks.length < 1) {
-        elBooksTable.innerHTML = `<tr><td class="empty-table" colspan="3">No matching books were found</td></tr>`
+        elBooksTable.innerHTML = `<tr><td class="empty-table" colspan="4">No matching books were found</td></tr>`
         _renderstats()
         return
     }
@@ -53,6 +54,7 @@ function renderBooks() {
     var strHTML = books.map(book => `
             <tr>
                 <td>${book.title}</td>
+                <td>${book.rate} ⭐️</td>
                 <td>${book.price}</td>
                 <td><span class="button btn-read" onclick="onReadBook('${book.id}')">Read</span>
                 <span class="button btn-update" onclick="onUpdateBook('${book.id}')">Update</span>

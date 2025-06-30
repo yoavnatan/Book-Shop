@@ -48,9 +48,9 @@ function _createBooks() {
     if (gBooks && gBooks.length > 0) return
 
     gBooks = [
-        _createBook('The Adventures of Lori Ipsi', 120, 'imgs/advanture.jpg', 'Siki & Lori is about a Siamese cat boy named Siki and a golden retriever dog named Lori. That go on exciting adventures & most haunting and action type series. They encounter many villains slowly twists over to cursed odjects, possessed pets and people. With scary monsters & ghosts although it gets bloody during in the futher chapters of Siki and Lori.'),
-        _createBook('World Atlas', 300, 'imgs/atlas.jpg', 'lorem ipsum'),
-        _createBook('Zorba the Greek', 87, 'imgs/zorba.jpg', 'lorem ipsum')
+        _createBook('The Adventures of Lori Ipsi', 120, 'imgs/advanture.jpg', makeLorem(50)),
+        _createBook('World Atlas', 300, 'imgs/atlas.jpg', makeLorem(50)),
+        _createBook('Zorba the Greek', 87, 'imgs/zorba.jpg', makeLorem(50))
     ]
 
     _saveBooks()
@@ -63,7 +63,7 @@ function _createBook(title, price, img, description) {
         price,
         img,
         description,
-        rate: 0,
+        rate: getRandomInt(1, 6),
     }
 }
 
