@@ -249,11 +249,7 @@ main>button {
 .nav-group {
 
     display: flex;
-    justify-content: center;
     gap: 10px;
-    /* background-color: var(--color1); */
-    margin: 20px auto;
-    width: 50vh;
 }
 
 .cards-container .title {
@@ -264,3 +260,7 @@ main>button {
 .cards-container .price {
     margin-block-end: 1em;
 }
+
+/* .sort-by {
+    display: flex;
+} */

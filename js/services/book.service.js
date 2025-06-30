@@ -6,14 +6,37 @@ var gBooks
 _createBooks()
 console.log(gBooks)
 
-function getBooks(filterBy) {
-    if (!filterBy.txt && !filterBy.minRate) return gBooks
+function getBooks(options) {
+    if (!options) options = {} // why?
 
-    if (filterBy.txt && !filterBy.minRate) return gBooks.filter(book => book.title.toLowerCase().includes(filterBy.txt.toLowerCase()))
+    const filterBy = options.filterBy
+    const sortBy = options.sortBy
+    const page = options.page
 
-    if (!filterBy.txt && filterBy.minRate) return gBooks.filter(book => book.rate >= filterBy.minRate)
+    var books = _filterBooks(filterBy)
 
-    return gBooks.filter(book => book.rate >= filterBy.minRate && book.title.toLowerCase().includes(filterBy.txt.toLowerCase()))
+    if (sortBy.sortField) {
+        if (sortBy.sortField === 'title') {
+            books.sort((book1, book2) => book1.title.localeCompare(book2.title) * sortBy.sortDir)
+        } else if (sortBy.sortField === 'minRate') {
+            books.sort((book1, book2) => (book1.rate - book2.rate) * sortBy.sortDir)
+        }
+    }
+
+    return books
+}
+
+function _filterBooks(filterBy) {
+    var books = gBooks.slice()
+
+    if (filterBy.txt) {
+        books = books.filter(book => book.title.toLowerCase().includes(filterBy.txt.toLowerCase()))
+    }
+    if (filterBy.minRate) {
+        books = books.filter(book => book.rate >= filterBy.minRate)
+    }
+
+    return books
 }
 
 function getBookById(bookId) {

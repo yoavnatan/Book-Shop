@@ -15,7 +15,7 @@ function onInit() {
 
 
 function render() {
-    const books = getBooks(gQueryOptions.filterBy)
+    const books = getBooks(gQueryOptions)
 
     if (gLayout === 'cards') renderCards(books)
     if (gLayout === 'table') renderTable(books)
@@ -217,6 +217,23 @@ function onFilterByRate(elFilterBy) {
     render()
 }
 
+function onSetSortBy() {
+    const elSortField = document.querySelector('.sort-field')
+    const elSortDirs = document.querySelectorAll('.sort-dir')
+    var elSortDir
+    for (var i = 0; i < 2; i++) {
+        if (elSortDirs[i].checked) {
+            elSortDir = elSortDirs[i]
+        }
+    }
+
+    if (elSortDir.value === 'ascending') gQueryOptions.sortBy.sortDir = 1
+    else if (elSortDir.value === 'descending') gQueryOptions.sortBy.sortDir = -1
+    gQueryOptions.sortBy.sortField = elSortField.value
+
+    render()
+
+}
 
 //* Query Params
 function readQueryParams() {
@@ -250,8 +267,9 @@ function renderQueryParams() {
     const sortField = gQueryOptions.sortBy.sortField
     const sortDir = +gQueryOptions.sortBy.sortDir
 
-    // document.querySelector('.sort-by select').value = sortField || ''
-    // document.querySelector('.sort-by input').checked = (sortDir === -1) ? true : false
+    document.querySelector('.sort-by select').value = sortField || ''
+    document.querySelector('#descending').checked = (sortDir === -1) ? true : false
+    document.querySelector('#ascending').checked = (sortDir === 1) ? true : false
 }
 
 function setQueryParams() {
