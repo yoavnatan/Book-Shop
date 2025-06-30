@@ -194,11 +194,12 @@ main>button {
     justify-content: center;
     align-content: start;
     flex-wrap: wrap;
+    overflow: auto;
 
     margin: 50px;
     gap: 20px;
     width: 90vw;
-    height: 60vh;
+    /* height: 60vh; */
 }
 
 .cards-container>div {

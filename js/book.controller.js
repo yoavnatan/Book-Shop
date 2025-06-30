@@ -1,24 +1,31 @@
 'use strict'
 
-var gFilterBy = ''
-var gLayout = loadFromStorage('viewKey') || 'table'
+const gQueryOptions = {
+    filterBy: { txt: '', minRate: 0 },
+    sortBy: {},
+    page: {},
+}
+
+var gLayout = getLayout()
 
 function onInit() {
+    readQueryParams()
     render()
 }
 
 
 function render() {
+    const books = getBooks(gQueryOptions.filterBy)
 
-    if (gLayout === 'cards') renderCards()
-    if (gLayout === 'table') renderTable()
+    if (gLayout === 'cards') renderCards(books)
+    if (gLayout === 'table') renderTable(books)
     _renderstats()
+    setQueryParams()
 
 }
-function renderCards() {
+function renderCards(books) {
 
     const elBooksCard = document.querySelector('.cards-container')
-    const books = getBooks(gFilterBy)
 
     var strHTML = books.map(book => `<div class="card">
 
@@ -41,9 +48,8 @@ function renderCards() {
     showElement('.cards-container')
 }
 
-function renderTable() {
+function renderTable(books) {
     const elBooksTable = document.querySelector('.table-container tbody')
-    const books = getBooks(gFilterBy)
 
     if (!gBooks || gBooks.length < 1) {
         elBooksTable.innerHTML = `<tr><td class="empty-table" colspan="4">No matching books were found</td></tr>`
@@ -71,14 +77,20 @@ function renderTable() {
 
 
 function onSearchBook(elFilterBy) {
-    gFilterBy = elFilterBy.value
+    gQueryOptions.filterBy.txt = elFilterBy.value
     render()
 }
 
 function onClearClicked() {
     const elSearchLine = document.querySelector('input')
+    const elMinRateDropDown = document.querySelector('[name="rates"]')
+    elMinRateDropDown.selectedIndex = 0
+    console.log(elMinRateDropDown.selectedIndex)
+    elMinRateDropDown.value = ''
     elSearchLine.value = ''
-    gFilterBy = ''
+    gQueryOptions.filterBy.txt = ''
+    gQueryOptions.filterBy.minRate = 0
+
     render()
 }
 
@@ -153,22 +165,26 @@ function _renderstats() {
     document.querySelector('.cheap-books span').innerText = stats.cheap
 }
 
-function onCardsView() {
+function onToggleView() {
 
-    gLayout = 'cards'
+    var stateToSet = gLayout === 'cards' ? 'table' : 'cards'
+    gLayout = stateToSet
+
+    //  or
+    // gLayout = gLayout === 'cards' ? 'table' : 'cards'
+
     render()
-    hideElement('.table-container')
-    saveToStorage('viewKey', 'cards')
+    saveLayout(gLayout)
 }
 
-function onTableView() {
+// function onTableView() {
 
-    gLayout = 'table'
-    document.querySelector('.cards-container').style.display = 'none'
-    render()
-    saveToStorage('viewKey', 'table')
+//     gLayout = 'table'
+//     document.querySelector('.cards-container').style.display = 'none'
+//     render()
+//     saveLayout('table')
 
-}
+// }
 
 function onChangeRate(ev, diff) {
     ev.preventDefault()
@@ -178,12 +194,6 @@ function onChangeRate(ev, diff) {
     const book = updateRating(bookId, +diff)
 
     elBookModal.querySelector('.book-rate span').innerText = book.rate
-
-
-    // var rate = +document.querySelector('.rate').innerText
-    // rate += diff
-
-    // document.querySelector('.rate').innerText = rate
 
 }
 
@@ -200,4 +210,69 @@ function onSubmit() {
     addBook(bookTitle, bookprice, imgUrl)
     render()
 
+}
+
+function onFilterByRate(elFilterBy) {
+    gQueryOptions.filterBy.minRate = elFilterBy.value
+    render()
+}
+
+
+//* Query Params
+function readQueryParams() {
+    const queryParams = new URLSearchParams(window.location.search)
+
+    gQueryOptions.filterBy = {
+        txt: queryParams.get('title') || '',
+        minRate: +queryParams.get('minRate') || 0
+    }
+
+    if (queryParams.get('sortField')) {
+        const field = queryParams.get('sortField')
+        const dir = queryParams.get('sortDir')
+
+        gQueryOptions.sortBy.sortField = field
+        gQueryOptions.sortBy.sortDir = dir
+    }
+
+    if (queryParams.get('pageIdx')) {
+        gQueryOptions.page.idx = +queryParams.get('pageIdx')
+    }
+
+    renderQueryParams()
+}
+
+function renderQueryParams() {
+
+    document.querySelector('.title-search').value = gQueryOptions.filterBy.txt
+    document.querySelector('.min-rate-filter').selectedIndex = gQueryOptions.filterBy.minRate
+
+    const sortField = gQueryOptions.sortBy.sortField
+    const sortDir = +gQueryOptions.sortBy.sortDir
+
+    // document.querySelector('.sort-by select').value = sortField || ''
+    // document.querySelector('.sort-by input').checked = (sortDir === -1) ? true : false
+}
+
+function setQueryParams() {
+    const queryParams = new URLSearchParams()
+
+    queryParams.set('title', gQueryOptions.filterBy.txt)
+    queryParams.set('minRate', gQueryOptions.filterBy.minRate)
+
+    if (gQueryOptions.sortBy.sortField) {
+        queryParams.set('sortField', gQueryOptions.sortBy.sortField)
+        queryParams.set('sortDir', gQueryOptions.sortBy.sortDir)
+    }
+
+    if (gQueryOptions.page) {
+        queryParams.set('pageIdx', gQueryOptions.page.idx)
+    }
+
+    const newUrl =
+        window.location.protocol + "//" +
+        window.location.host +
+        window.location.pathname + '?' + queryParams.toString()
+
+    window.history.pushState({ path: newUrl }, '', newUrl)
 }

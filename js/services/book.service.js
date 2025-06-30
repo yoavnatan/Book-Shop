@@ -7,10 +7,13 @@ _createBooks()
 console.log(gBooks)
 
 function getBooks(filterBy) {
-    if (!filterBy) return gBooks
+    if (!filterBy.txt && !filterBy.minRate) return gBooks
 
-    return gBooks.filter(book => book.title.toLowerCase().includes(filterBy.toLowerCase()))
+    if (filterBy.txt && !filterBy.minRate) return gBooks.filter(book => book.title.toLowerCase().includes(filterBy.txt.toLowerCase()))
 
+    if (!filterBy.txt && filterBy.minRate) return gBooks.filter(book => book.rate >= filterBy.minRate)
+
+    return gBooks.filter(book => book.rate >= filterBy.minRate && book.title.toLowerCase().includes(filterBy.txt.toLowerCase()))
 }
 
 function getBookById(bookId) {
@@ -81,5 +84,16 @@ function updateRating(bookId, diff) {
 function addBookByModal(title, price, img) {
     addBook(title, price, img)
     _saveBooks
+
+}
+
+function saveLayout(layout) {
+    saveToStorage('viewKey', layout)
+}
+
+
+//TODO: change 'viewKey'
+function getLayout() {
+    return loadFromStorage('viewKey') || 'table'
 
 }

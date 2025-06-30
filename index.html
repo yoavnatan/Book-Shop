@@ -12,8 +12,7 @@
 
     <header>
         <div class="modal hide"></div>
-        <button class="cards-view" onclick="onCardsView()">&#9783;</button>
-        <button class="table-view" onclick="onTableView()">&#9782;</button>
+        <button class="cards-view" onclick="onToggleView()">&#9783;</button>
         <h2>Books</h2>
     </header>
 
@@ -22,7 +21,15 @@
         <div class="nav-group">
             <button class="btn-add" onclick="onAddBook()">add</button>
             <button class="btn-add-modal" onclick="onAddBookByModal()">add By modal</button>
-            <input type="text" oninput="onSearchBook(this)" placeholder="search books">
+            <select class="min-rate-filter" name="rates" onchange="onFilterByRate(this)">
+                <option value=''>min-rate</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+            <input class="title-search" type="text" oninput="onSearchBook(this)" placeholder="search books">
             <button class="clear" onclick="onClearClicked()">clear</button>
         </div>
 
