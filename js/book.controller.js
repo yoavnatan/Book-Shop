@@ -6,6 +6,7 @@ const gQueryOptions = {
     page: { idx: 0, size: 5 },
 }
 
+var gBookToUpdateID = null
 var gLayout = getLayout()
 
 function onInit() {
@@ -125,23 +126,56 @@ function onRemoveBook(bookId) {
 
 
 function onUpdateBook(bookId) {
-    const newPrice = prompt('Insert a new price')
-    updatePrice(bookId, newPrice)
-    render()
+    // const newPrice = prompt('Insert a new price')
+    // updatePrice(bookId, newPrice)
+    // render()
+
+    gBookToUpdateID = bookId
+    const elUpdateModal = document.querySelector('.update-modal')
+
+    elUpdateModal.showModal()
+    // updateBook(bookId,newTitle,newPrice)
+
 
 }
 
 function onAddBook() {
-    const title = prompt('Insert a book title')
-    const price = +prompt('Insert a book price')
-    if (!title || !price || price < 0) return alert('please insert propper inputs')
-    addBook(title, price)
-    render()
+    // const title = prompt('Insert a book title')
+    // const price = +prompt('Insert a book price')
+    // if (!title || !price || price < 0) return alert('please insert propper inputs')
+    // addBook(title, price)
+    // render()
+    const elAddModal = document.querySelector('.update-modal')
+    elAddModal.showModal()
 }
 
 function onAddBookByModal() {
     const elAddModal = document.querySelector('.update-modal')
     elAddModal.showModal()
+}
+
+function onSubmit() {
+    const bookTitle = document.getElementById('booktitle').value
+    const bookprice = document.getElementById('bookprice').value
+    const imgUrl = document.getElementById('bookimage').value
+
+    if (!gBookToUpdateID) {
+        addBook(bookTitle, bookprice, imgUrl)
+    } else {
+        updateBook(gBookToUpdateID, bookTitle, bookprice, imgUrl)
+    }
+
+    render()
+    resetModal()
+
+}
+
+function resetModal() {
+    document.getElementById('booktitle').value = ''
+    document.getElementById('bookprice').value = ''
+    document.getElementById('bookimage').value = ''
+
+
 }
 
 function onReadBook(bookId) {
@@ -217,15 +251,6 @@ function onInputPrice(elPriceInput) {
 
     var price = +elPriceInput.value
     elPriceInput.value = price.toFixed(2)
-}
-
-function onSubmit() {
-    const bookTitle = document.getElementById('booktitle').value
-    const bookprice = document.getElementById('bookprice').value
-    const imgUrl = document.getElementById('bookimage').value
-    addBook(bookTitle, bookprice, imgUrl)
-    render()
-
 }
 
 function onFilterByRate(elFilterBy) {

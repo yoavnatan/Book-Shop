@@ -132,3 +132,15 @@ function getLastPageIdx(options) {
 
     return Math.ceil(length / page.size) - 1
 }
+
+
+function updateBook(bookId, newTitle, newPrice, newImg) {
+    const book = getBookById(bookId)
+    book.title = newTitle
+    book.price = newPrice
+    book.img = newImg
+
+    _saveBooks()
+    return book
+
+}
