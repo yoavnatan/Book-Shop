@@ -8,6 +8,8 @@ const gQueryOptions = {
 
 var gBookToUpdateID = null
 var gLayout = getLayout()
+var gRateToUpdate = null
+var gRateCount = 0
 
 function onInit() {
     readQueryParams()
@@ -34,7 +36,7 @@ function renderCards(books) {
 <img alt="No image" src="${book.img}">
         <div class="title">${book.title}</div>
         <div class="price">${book.price}$</div>
-        <div class="rate">${book.rate} ⭐️</div>
+        <div class="rate">${getStars(book.rate)}</div>
         <div class="btns-conatiner">
         <span class="button btn-read" onclick="onReadBook('${book.id}')">Read</span>
             <span class="button btn-update" onclick="onUpdateBook('${book.id}')">Update</span>
@@ -49,6 +51,7 @@ function renderCards(books) {
     showElement('.cards-container')
     renderPages()
 }
+
 
 // function onResetRadioBtns() {
 //     const elRadioBtns = document.querySelectorAll('.sort-dir')
@@ -68,7 +71,7 @@ function renderTable(books) {
     var strHTML = books.map(book => `
             <tr>
                 <td>${book.title}</td>
-                <td>${book.rate} ⭐️</td>
+                <td>${getStars(book.rate)}</td>
                 <td>${book.price}</td>
                 <td><span class="button btn-read" onclick="onReadBook('${book.id}')">Read</span>
                 <span class="button btn-update" onclick="onUpdateBook('${book.id}')">Update</span>
@@ -83,6 +86,14 @@ function renderTable(books) {
     renderPages()
 
 
+}
+function getStars(rate) {
+    var str = ''
+    for (var i = 0; i < rate; i++) {
+        str += '⭐️'
+    }
+
+    return str
 }
 
 function renderPages() {
@@ -161,11 +172,12 @@ function onSubmit() {
     const bookTitle = document.getElementById('booktitle').value
     const bookprice = document.getElementById('bookprice').value
     const imgUrl = document.getElementById('bookimage').value
+    const rate = +document.querySelector('.book-rate-update-modal span').innerText
 
     if (!gBookToUpdateID) {
         addBook(bookTitle, bookprice, imgUrl)
     } else {
-        updateBook(gBookToUpdateID, bookTitle, bookprice, imgUrl)
+        updateBook(gBookToUpdateID, bookTitle, bookprice, imgUrl, rate)
         gBookToUpdateID = null
     }
 
@@ -258,7 +270,20 @@ function onChangeRate(ev, diff) {
 
 }
 
+function onUpdateRate(ev, diff) {
+    ev.preventDefault()
+    const elUpdateModal = document.querySelector('.update-modal')
+    const bookId = elUpdateModal.dataset.bookId
+    const book = getBookById(bookId)
+    gRateToUpdate = book.rate
+    gRateCount += diff
+    elUpdateModal.querySelector('.book-rate-update-modal span').innerText = book.rate + gRateCount
+}
+
 function onCloseModal() {
+    const elUpdateModal = document.querySelector('.update-modal')
+    elUpdateModal.querySelector('.book-rate-update-modal span').innerText = gRateToUpdate
+    gRateCount = 0
     render()
 }
 

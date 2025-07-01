@@ -134,11 +134,12 @@ function getLastPageIdx(options) {
 }
 
 
-function updateBook(bookId, newTitle, newPrice, newImg) {
+function updateBook(bookId, newTitle, newPrice, newImg, rate) {
     const book = getBookById(bookId)
     book.title = newTitle
     book.price = newPrice
     book.img = newImg
+    book.rate = rate
 
     _saveBooks()
     return book
