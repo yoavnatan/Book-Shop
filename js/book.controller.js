@@ -131,7 +131,10 @@ function onUpdateBook(bookId) {
     // render()
 
     gBookToUpdateID = bookId
+    const book = getBookById(bookId)
     const elUpdateModal = document.querySelector('.update-modal')
+    elUpdateModal.querySelector('.book-rate-update-modal span').innerText = book.rate
+    elUpdateModal.dataset.bookId = bookId
 
     elUpdateModal.showModal()
     // updateBook(bookId,newTitle,newPrice)
@@ -163,6 +166,7 @@ function onSubmit() {
         addBook(bookTitle, bookprice, imgUrl)
     } else {
         updateBook(gBookToUpdateID, bookTitle, bookprice, imgUrl)
+        gBookToUpdateID = null
     }
 
     render()
@@ -238,14 +242,26 @@ function onToggleView() {
 
 function onChangeRate(ev, diff) {
     ev.preventDefault()
+    if (!gBookToUpdateID) {
+        const elBookModal = document.querySelector('.details-modal')
+        const bookId = elBookModal.dataset.bookId
+        const book = updateRating(bookId, +diff)
 
-    const elBookModal = document.querySelector('.details-modal')
-    const bookId = elBookModal.dataset.bookId
+        elBookModal.querySelector('.book-rate span').innerText = book.rate
+        return
+    }
+
+    const elUpdateModal = document.querySelector('.update-modal')
+    const bookId = elUpdateModal.dataset.bookId
     const book = updateRating(bookId, +diff)
-
-    elBookModal.querySelector('.book-rate span').innerText = book.rate
+    elUpdateModal.querySelector('.book-rate-update-modal span').innerText = book.rate
 
 }
+
+function onCloseModal() {
+    render()
+}
+
 
 function onInputPrice(elPriceInput) {
 

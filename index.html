@@ -79,7 +79,7 @@
 
     <dialog class="update-modal">
         <form method="dialog">
-            <button>x</button>
+            <button onclick="onCloseModal()">x</button>
             <h1>Add a Book</h1>
             <label for="booktitle">book title:</label>
             <input type="text" id="booktitle" placeholder="book name">
@@ -87,13 +87,17 @@
             <input type="number" id="bookprice" step="0.5" placeholder="book price" oninput="onInputPrice(this)">
             <label for="bookimage">Image:</label>
             <input type="text" id="bookimage" placeholder="url">
+
+            <button onclick="onChangeRate(event,-1)">-</button>
+            <div class="book-rate-update-modal"><span></span></div>
+            <button onclick="onChangeRate(event,1)">+</button>
             <button onclick="onSubmit()">Submit</button>
         </form>
     </dialog>
 
     <dialog class="details-modal">
         <form method="dialog">
-            <button>x</button>
+            <button onclick="onCloseModal()">x</button>
             <h1 class="book-title"></h1>
             <span></span>
             <pre></pre>
