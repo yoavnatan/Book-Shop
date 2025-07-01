@@ -23,6 +23,10 @@ function getBooks(options) {
         }
     }
 
+    const startIdx = page.idx * page.size
+    const endIdx = startIdx + page.size
+    books = books.slice(startIdx, endIdx)
+
     return books
 }
 
@@ -119,4 +123,12 @@ function saveLayout(layout) {
 function getLayout() {
     return loadFromStorage('viewKey') || 'table'
 
+}
+
+function getLastPageIdx(options) {
+    const filterBy = options.filterBy
+    const page = options.page
+    const length = _filterBooks(filterBy).length
+
+    return Math.ceil(length / page.size) - 1
 }

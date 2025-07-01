@@ -3,7 +3,7 @@
 const gQueryOptions = {
     filterBy: { txt: '', minRate: 0 },
     sortBy: {},
-    page: {},
+    page: { idx: 0, size: 5 },
 }
 
 var gLayout = getLayout()
@@ -46,7 +46,14 @@ function renderCards(books) {
     elBooksCard.innerHTML = strHTML.join('')
     hideElement('.table-container')
     showElement('.cards-container')
+    renderPages()
 }
+
+// function onResetRadioBtns() {
+//     const elRadioBtns = document.querySelectorAll('.sort-dir')
+//     const elSortField = document.querySelector('.sort-field')
+
+// }
 
 function renderTable(books) {
     const elBooksTable = document.querySelector('.table-container tbody')
@@ -72,8 +79,18 @@ function renderTable(books) {
 
     hideElement('.cards-container')
     showElement('.table-container')
+    renderPages()
+
 
 }
+
+function renderPages() {
+    const pageIdx = document.querySelector('.pages span:nth-child(1)')
+    const pageSum = document.querySelector('.pages span:nth-child(2)')
+    pageIdx.innerText = gQueryOptions.page.idx
+    pageSum.innerText = getLastPageIdx(gQueryOptions)
+}
+
 
 
 function onSearchBook(elFilterBy) {
@@ -137,7 +154,6 @@ function onReadBook(bookId) {
 
     const book = getBookById(bookId)
 
-    console.log('book.rate', book.rate)
     if (book.img) {
         elImg.innerHTML = `<img src="${book.img}">`
         elDetails.innerText = book.description
@@ -225,12 +241,36 @@ function onSetSortBy() {
         if (elSortDirs[i].checked) {
             elSortDir = elSortDirs[i]
         }
+
     }
 
     if (elSortDir.value === 'ascending') gQueryOptions.sortBy.sortDir = 1
     else if (elSortDir.value === 'descending') gQueryOptions.sortBy.sortDir = -1
     gQueryOptions.sortBy.sortField = elSortField.value
 
+    render()
+
+}
+
+function onNextPage() {
+    const lastPageIdx = getLastPageIdx(gQueryOptions)
+    if (gQueryOptions.page.idx === lastPageIdx) {
+        gQueryOptions.page.idx = 0
+    } else {
+        gQueryOptions.page.idx++
+    }
+
+    render()
+}
+
+function onPrevPage() {
+    const firstPageIdx = 0
+    const lastPageIdx = getLastPageIdx(gQueryOptions)
+    if (gQueryOptions.page.idx === firstPageIdx) {
+        gQueryOptions.page.idx = lastPageIdx
+    } else {
+        gQueryOptions.page.idx--
+    }
     render()
 
 }

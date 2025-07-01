@@ -33,6 +33,8 @@
 
             <input class="title-search" type="text" oninput="onSearchBook(this)" placeholder="search books">
             <button class="clear" onclick="onClearClicked()">clear</button>
+            <button class="prev-page" onclick="onPrevPage()">prev-page</button>
+            <button class="next-page" onclick="onNextPage()">next-page</button>
         </div>
         <div class="sort-by">
             <select class="sort-field" onchange="onSetSortBy()">
@@ -41,8 +43,7 @@
                 <option value="minRate">Rate</option>
             </select>
             <!-- <legend>Order for sorting</legend> -->
-            <input class="sort-dir" type="radio" name="order" id="ascending" value="ascending" checked
-                onclick="onSetSortBy()">
+            <input class="sort-dir" type="radio" name="order" id="ascending" value="ascending" onclick="onSetSortBy()">
             <label for="ascending">ascending</label>
             <input class="sort-dir" type="radio" name="order" id="descending" value="descending"
                 onclick="onSetSortBy()">
@@ -63,14 +64,18 @@
         </table>
         <div class="cards-container">
         </div>
+        <!-- <div class="pages"></div> -->
 
     </section>
+    <div class="pages">Page:<span></span>/<span></span></div>
+
 
     <footer>
         <div class="expensive-books"><span></span> Expensive books</div>
         <div class="avarage-books"><span></span> Avarage costs books</div>
         <div class="cheap-books"><span></span> Cheap books</div>
     </footer>
+
 
     <dialog class="update-modal">
         <form method="dialog">
