@@ -4,6 +4,7 @@ const gQueryOptions = {
     filterBy: { txt: '', minRate: 0 },
     sortBy: {},
     page: { idx: 0, size: 5 },
+    bookId: ''
 }
 
 var gBookToUpdateID = null
@@ -141,6 +142,7 @@ function onUpdateBook(bookId) {
     // updatePrice(bookId, newPrice)
     // render()
 
+
     gBookToUpdateID = bookId
     const book = getBookById(bookId)
     const elUpdateModal = document.querySelector('.update-modal')
@@ -195,6 +197,7 @@ function resetModal() {
 }
 
 function onReadBook(bookId) {
+    gQueryOptions.bookId = bookId
     const elDetailsModal = document.querySelector('.details-modal')
     const elDetails = document.querySelector('.book-description')
     const elPrice = document.querySelector('.book-price span')
@@ -215,6 +218,7 @@ function onReadBook(bookId) {
 
     elDetailsModal.dataset.bookId = bookId
     elDetailsModal.showModal()
+    setQueryParams()
 }
 
 //TODO: look at the last CR
@@ -282,6 +286,7 @@ function onUpdateRate(ev, diff) {
 }
 
 function onCloseModal() {
+    gQueryOptions.bookId = ''
     const elUpdateModal = document.querySelector('.update-modal')
     elUpdateModal.querySelector('.book-rate-update-modal span').innerText = gRateToUpdate
     gRateCount = 0
@@ -385,6 +390,11 @@ function readQueryParams() {
         gQueryOptions.page.idx = +queryParams.get('pageIdx')
     }
 
+    if (queryParams.get('bookId')) {
+        console.log('hi')
+        onReadBook(queryParams.get('bookId'))
+    }
+
     renderQueryParams()
 }
 
@@ -401,7 +411,7 @@ function renderQueryParams() {
     document.querySelector('#descending').checked = (sortDir === -1) ? true : false
     document.querySelector('#ascending').checked = (sortDir === 1) ? true : false
 
-    document.querySelector(`.table-container .${sortField} span`).innerText = (sortDir === -1) ? '-' : '+'
+    if (sortField) document.querySelector(`.table-container .${sortField} span`).innerText = (sortDir === -1) ? '-' : '+'
 }
 
 function setQueryParams() {
@@ -418,6 +428,10 @@ function setQueryParams() {
     if (gQueryOptions.page) {
         queryParams.set('pageIdx', gQueryOptions.page.idx)
     }
+
+
+    queryParams.set('bookId', gQueryOptions.bookId)
+
 
     const newUrl =
         window.location.protocol + "//" +
