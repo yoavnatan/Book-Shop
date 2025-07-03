@@ -16,10 +16,12 @@ function getBooks(options) {
     var books = _filterBooks(filterBy)
 
     if (sortBy.sortField) {
+        if (!sortBy.sortDir) sortBy.sortDir === 1
         if (sortBy.sortField === 'title') {
             books.sort((book1, book2) => book1.title.localeCompare(book2.title) * sortBy.sortDir)
-        } else if (sortBy.sortField === 'minRate') {
-            books.sort((book1, book2) => (book1.rate - book2.rate) * sortBy.sortDir)
+        } else if (sortBy.sortField === 'rate' || sortBy.sortField === 'price') {
+            console.log()
+            books.sort((book1, book2) => (book1[sortBy.sortField] - book2[sortBy.sortField]) * sortBy.sortDir)
         }
     }
 
@@ -30,6 +32,7 @@ function getBooks(options) {
     return books
 }
 
+//TODO: add another selector (moving, min price), and Undefined condition
 function _filterBooks(filterBy) {
     var books = gBooks.slice()
 
@@ -86,7 +89,7 @@ function _createBooks() {
     _saveBooks()
 }
 
-function _createBook(title, price, img, description) {
+function _createBook(title, price, img = getRandomPic(), description) {
     return {
         id: makeid(),
         title,

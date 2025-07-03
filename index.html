@@ -53,9 +53,9 @@
         <table class="table-container">
             <thead>
                 <tr>
-                    <th>title</th>
-                    <th>rate</th>
-                    <th>price</th>
+                    <th class="title" onclick="onSetSortByHeader(this,'title')">title<span></span></th>
+                    <th class="rate" onclick="onSetSortByHeader(this, 'rate')">rate<span></span></th>
+                    <th class="price" onclick="onSetSortByHeader(this, 'price')">price<span></span></th>
                     <th>actions</th>
                 </tr>
             </thead>
@@ -110,6 +110,7 @@
     </dialog>
 
     <script src="js/services/utils.service.js"></script>
+    <script src="js/services/imgs.service.js"></script>
     <script src="js/services/storage.service.js"></script>
     <script src="js/services/book.service.js"></script>
 

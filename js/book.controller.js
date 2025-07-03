@@ -62,7 +62,7 @@ function renderCards(books) {
 function renderTable(books) {
     const elBooksTable = document.querySelector('.table-container tbody')
 
-    if (!gBooks || gBooks.length < 1) {
+    if (!books || books.length < 1) {
         elBooksTable.innerHTML = `<tr><td class="empty-table" colspan="4">No matching books were found</td></tr>`
         _renderstats()
         return
@@ -217,6 +217,7 @@ function onReadBook(bookId) {
     elDetailsModal.showModal()
 }
 
+//TODO: look at the last CR
 function _renderstats() {
     const stats = gBooks.reduce((acc, book) => {
         if (book.price >= 200) acc.exp++
@@ -309,13 +310,35 @@ function onSetSortBy() {
         }
 
     }
-
     if (elSortDir.value === 'ascending') gQueryOptions.sortBy.sortDir = 1
     else if (elSortDir.value === 'descending') gQueryOptions.sortBy.sortDir = -1
     gQueryOptions.sortBy.sortField = elSortField.value
 
+    gQueryOptions.page.idx = 0
+
     render()
 
+}
+
+function onSetSortByHeader(elHeader, sortBy) {
+    if (sortBy !== gQueryOptions.sortBy.sortField) gQueryOptions.sortBy.sortDir = null
+    gQueryOptions.sortBy.sortField = sortBy
+
+    const ths = document.querySelectorAll('th span')
+    console.log(ths[0].innerText)
+    for (var i = 0; i < ths.length; i++) {
+        ths[i].innerText = ''
+    }
+
+    if (!gQueryOptions.sortBy.sortDir) gQueryOptions.sortBy.sortDir = 1
+    else gQueryOptions.sortBy.sortDir *= -1
+
+
+    if (gQueryOptions.sortBy.sortDir === 1) elHeader.querySelector('span').innerText = '+'
+    else if (gQueryOptions.sortBy.sortDir === -1) elHeader.querySelector('span').innerText = '-'
+    gQueryOptions.page.idx = 0
+
+    render()
 }
 
 function onNextPage() {
@@ -371,11 +394,14 @@ function renderQueryParams() {
     document.querySelector('.min-rate-filter').selectedIndex = gQueryOptions.filterBy.minRate
 
     const sortField = gQueryOptions.sortBy.sortField
-    const sortDir = +gQueryOptions.sortBy.sortDir
+    var sortDir = +gQueryOptions.sortBy.sortDir
 
     document.querySelector('.sort-by select').value = sortField || ''
+    // if (!sortDir) sortDir = 1
     document.querySelector('#descending').checked = (sortDir === -1) ? true : false
     document.querySelector('#ascending').checked = (sortDir === 1) ? true : false
+
+    document.querySelector(`.table-container .${sortField} span`).innerText = (sortDir === -1) ? '-' : '+'
 }
 
 function setQueryParams() {
