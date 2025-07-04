@@ -70,7 +70,7 @@ function updatePrice(bookId, newPrice) {
 function addBook(title, price, img) {
 
     const newBook = _createBook(title, price, img)
-    gBooks.push(newBook)
+    gBooks.unshift(newBook)
 
     _saveBooks()
     return newBook

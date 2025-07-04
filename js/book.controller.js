@@ -143,9 +143,10 @@ function onUpdateBook(bookId) {
     // render()
 
 
+
     gBookToUpdateID = bookId
-    const book = getBookById(bookId)
     const elUpdateModal = document.querySelector('.update-modal')
+    const book = getBookById(bookId)
     elUpdateModal.querySelector('.book-rate-update-modal span').innerText = book.rate
     elUpdateModal.dataset.bookId = bookId
 
@@ -153,6 +154,14 @@ function onUpdateBook(bookId) {
     // updateBook(bookId,newTitle,newPrice)
 
 
+}
+
+function onEdit() {
+
+    const elDetailsModal = document.querySelector('.details-modal')
+    const bookId = elDetailsModal.dataset.bookId
+    onUpdateBook(bookId)
+    elDetailsModal.close()
 }
 
 function onAddBook() {
@@ -207,21 +216,20 @@ function onReadBook(bookId) {
 
     const book = getBookById(bookId)
 
-    if (book.img) {
-        elImg.innerHTML = `<img src="${book.img}">`
-        elDetails.innerText = book.description
-        elPrice.innerText = book.price
-        elTitle.innerText = book.title
-        elRate.innerText = book.rate
-    }
-    else elDetails.innerText = JSON.stringify(book)
+
+    elImg.innerHTML = `<img src="${book.img}">`
+    // TODO: fix Img src
+    elDetails.innerText = book.description
+    elPrice.innerText = book.price
+    elTitle.innerText = book.title
+    elRate.innerText = book.rate
 
     elDetailsModal.dataset.bookId = bookId
     elDetailsModal.showModal()
     setQueryParams()
 }
 
-//TODO: look at the last CR
+//TODO: look at the last CR (needs to be separated and in the service)
 function _renderstats() {
     const stats = gBooks.reduce((acc, book) => {
         if (book.price >= 200) acc.exp++
