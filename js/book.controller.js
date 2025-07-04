@@ -24,9 +24,28 @@ function render() {
     if (gLayout === 'cards') renderCards(books)
     if (gLayout === 'table') renderTable(books)
     _renderstats()
+    _renderPaging()
     setQueryParams()
 
 }
+
+function _renderPaging() {
+    var strHTML = ''
+
+    for (var i = 0; i <= getLastPageIdx(gQueryOptions); i++) {
+        strHTML += `<button onclick="onPageClicked(${i})">${i + 1}</button>`
+
+    }
+
+    document.querySelector('.paging-btns').innerHTML = strHTML
+}
+
+function onPageClicked(pageIdx) {
+    gQueryOptions.page.idx = pageIdx
+    render()
+
+}
+
 function renderCards(books) {
 
     const elBooksCard = document.querySelector('.cards-container')
@@ -100,8 +119,8 @@ function getStars(rate) {
 function renderPages() {
     const pageIdx = document.querySelector('.pages span:nth-child(1)')
     const pageSum = document.querySelector('.pages span:nth-child(2)')
-    pageIdx.innerText = gQueryOptions.page.idx
-    pageSum.innerText = getLastPageIdx(gQueryOptions)
+    pageIdx.innerText = gQueryOptions.page.idx + 1
+    pageSum.innerText = getLastPageIdx(gQueryOptions) + 1
 }
 
 

@@ -32,6 +32,7 @@ function getBooks(options) {
     return books
 }
 
+
 //TODO: add another selector (moving, min price), and Undefined condition
 function _filterBooks(filterBy) {
     var books = gBooks.slice()
@@ -80,16 +81,20 @@ function _createBooks() {
     gBooks = loadFromStorage(STORAGE_KEY)
     if (gBooks && gBooks.length > 0) return
 
-    gBooks = [
-        _createBook('The Adventures of Lori Ipsi', 120, 'imgs/advanture.jpg', makeLorem(50)),
-        _createBook('World Atlas', 300, 'imgs/atlas.jpg', makeLorem(50)),
-        _createBook('Zorba the Greek', 87, 'imgs/zorba.jpg', makeLorem(50))
-    ]
+    // gBooks = [
+    //     _createBook('The Adventures of Lori Ipsi', 120, 'imgs/advanture.jpg', makeLorem(50)),
+    //     _createBook('World Atlas', 300, 'imgs/atlas.jpg', makeLorem(50)),
+    //     _createBook('Zorba the Greek', 87, 'imgs/zorba.jpg', makeLorem(50))
+    // ]
+    gBooks = []
+    for (var i = 0; i < 20; i++) {
+        gBooks.push(_createBook())
+    }
 
     _saveBooks()
 }
 
-function _createBook(title, price, img = getRandomPic(), description) {
+function _createBook(title = makeLorem(2), price = getRandomInt(10, 255), img = getRandomPic(), description = makeLorem(50)) {
     return {
         id: makeid(),
         title,

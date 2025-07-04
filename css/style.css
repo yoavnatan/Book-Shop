@@ -269,3 +269,7 @@ main>button {
     position: absolute;
     bottom: 60px;
 }
+
+.paging {
+    display: flex;
+}
