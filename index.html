@@ -13,16 +13,17 @@
     <header>
         <div class="modal hide"></div>
         <button class="cards-view" onclick="onToggleView()">&#9783;</button>
-        <h2>Books</h2>
+        <button class="trans" onclick="onSetLang()">עב</button>
+        <h2 data-trans="appTitle">Books</h2>
     </header>
 
 
     <section class="main-container">
         <div class="nav-group">
-            <button class="btn-add" onclick="onAddBook()">add</button>
-            <button class="btn-add-modal" onclick="onAddBookByModal()">add By modal</button>
+            <button class="btn-add" onclick="onAddBook()" data-trans="add">add</button>
+            <button class="btn-add-modal" onclick="onAddBookByModal()" data-trans="addBy">add By modal</button>
             <select class="min-rate-filter" name="rates" onchange="onFilterByRate(this)">
-                <option value=''>Select min rate</option>
+                <option value='' data-trans="selectMinRate">Select min rate</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -31,32 +32,35 @@
             </select>
 
 
-            <input class="title-search" type="text" oninput="onSearchBook(this)" placeholder="search books">
-            <button class="clear" onclick="onClearClicked()">clear</button>
-            <button class="prev-page" onclick="onPrevPage()">prev-page</button>
-            <button class="next-page" onclick="onNextPage()">next-page</button>
+            <input class="title-search" id="search" type="text" oninput="onSearchBook(this)" placeholder="search books"
+                data-trans="searchline">
+            <button class="clear" onclick="onClearClicked()" data-trans="clear">clear</button>
+            <button class="prev-page" onclick="onPrevPage()" data-trans="prevPage">prev-page</button>
+            <button class="next-page" onclick="onNextPage()" data-trans="nextPage">next-page</button>
         </div>
         <div class="sort-by">
             <select class="sort-field" onchange="onSetSortBy()">
-                <option value="">Select Sorting</option>
+                <option value="" data-trans="selectSorting">Select Sorting</option>
                 <option value="title">By Title</option>
                 <option value="minRate">Rate</option>
             </select>
             <!-- <legend>Order for sorting</legend> -->
             <input class="sort-dir" type="radio" name="order" id="ascending" value="ascending" onclick="onSetSortBy()">
-            <label for="ascending">ascending</label>
+            <label for="ascending" data-trans="ascending">ascending</label>
             <input class="sort-dir" type="radio" name="order" id="descending" value="descending"
                 onclick="onSetSortBy()">
-            <label for="descending">descending</label>
+            <label for="descending" data-trans="descending">descending</label>
         </div>
 
         <table class="table-container">
             <thead>
                 <tr>
-                    <th class="title" onclick="onSetSortByHeader(this,'title')">title<span></span></th>
-                    <th class="rate" onclick="onSetSortByHeader(this, 'rate')">rate<span></span></th>
-                    <th class="price" onclick="onSetSortByHeader(this, 'price')">price<span></span></th>
-                    <th>actions</th>
+                    <th class="title" onclick="onSetSortByHeader(this,'title')" data-trans="title">title<span></span>
+                    </th>
+                    <th class="rate" onclick="onSetSortByHeader(this, 'rate')" data-trans="rate">rate<span></span></th>
+                    <th class="price" onclick="onSetSortByHeader(this, 'price')" data-trans="price">price<span></span>
+                    </th>
+                    <th data-trans="actions">actions</th>
                 </tr>
             </thead>
             <tbody>

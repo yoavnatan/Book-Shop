@@ -3,8 +3,74 @@
 const STORAGE_KEY = 'books'
 
 var gBooks
+var gLang = 'en'
 _createBooks()
 console.log(gBooks)
+
+var gTrans = {
+    appTitle: {
+        en: 'Books',
+        he: 'ספרים'
+    },
+    add: {
+        en: 'add',
+        he: 'הוסף'
+    },
+    addBy: {
+        en: 'add By modal',
+        he: 'הוסף ע״י מודל'
+    },
+    selectSorting: {
+        en: 'Select Sotring',
+        he: 'סנן לפי'
+
+    },
+    selectMinRate: {
+        en: 'Select Min rate',
+        he: 'בחר דירוג מינימלי'
+    },
+    ascending: {
+        en: 'ascending',
+        he: 'סדר עולה'
+    },
+    descending: {
+        en: 'descending',
+        he: 'סדר יורד'
+
+    },
+    clear: {
+        en: 'clear',
+        he: 'נקה'
+    },
+    prevPage: {
+        en: 'prev-page',
+        he: 'עמוד-הבא'
+    },
+    nextPage: {
+        en: 'next-page',
+        he: 'עמוד-הבא'
+    },
+    searchline: {
+        en: 'shearch books',
+        he: 'חפש'
+    },
+    title: {
+        en: 'title',
+        he: 'שם ספר'
+    },
+    rate: {
+        en: 'rate',
+        he: 'דירוג'
+    },
+    price: {
+        en: 'price',
+        he: 'מחיר'
+    },
+    actions: {
+        en: 'actions',
+        he: 'פעולות'
+    },
+}
 
 function getBooks(options) {
     if (!options) options = {} // why?
@@ -32,6 +98,20 @@ function getBooks(options) {
     return books
 }
 
+function setLang() {
+    if (gLang === 'en') {
+        gLang = 'he'
+    }
+    else if (gLang = 'he') {
+        gLang = 'en'
+
+    }
+}
+
+function getTrans(transKey) {
+    return gTrans[transKey][gLang]
+
+}
 
 //TODO: add another selector (moving, min price), and Undefined condition
 function _filterBooks(filterBy) {

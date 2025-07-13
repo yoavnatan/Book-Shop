@@ -12,10 +12,48 @@ var gLayout = getLayout()
 var gRateToUpdate = null
 var gRateCount = 0
 
+
+
 function onInit() {
     readQueryParams()
     render()
 }
+
+function doTrans() {
+
+    const els = document.querySelectorAll('[data-trans]')
+    els.forEach(el => {
+        const transKey = el.dataset.trans
+        const trans = getTrans(transKey)
+        el.innerText = trans
+    })
+    const transKey = document.querySelector('#search').dataset.trans
+    const trans = getTrans(transKey)
+    document.querySelector('#search').placeholder = trans
+
+}
+
+function onSetLang() {
+
+    changeDirection()
+    setLang()
+    doTrans()
+    setQueryParams()
+
+}
+
+function changeDirection() {
+    if (gLang === 'en') {
+        document.querySelector('.trans').innerText = 'en'
+        document.querySelector('body').style.direction = 'rtl'
+    }
+    else if (gLang = 'he') {
+        document.querySelector('.trans').innerText = 'עב'
+        document.querySelector('body').style.direction = 'ltr'
+
+    }
+}
+
 
 
 function render() {
@@ -422,6 +460,12 @@ function readQueryParams() {
         onReadBook(queryParams.get('bookId'))
     }
 
+    if (queryParams.get('lang')) {
+
+        gLang = queryParams.get('lang')
+    }
+
+
     renderQueryParams()
 }
 
@@ -439,6 +483,8 @@ function renderQueryParams() {
     document.querySelector('#ascending').checked = (sortDir === 1) ? true : false
 
     if (sortField) document.querySelector(`.table-container .${sortField} span`).innerText = (sortDir === -1) ? '-' : '+'
+    document.querySelector('body').style.direction = (gLang === 'en') ? 'ltr' : 'rtl'
+    doTrans()
 }
 
 function setQueryParams() {
@@ -455,6 +501,9 @@ function setQueryParams() {
     if (gQueryOptions.page) {
         queryParams.set('pageIdx', gQueryOptions.page.idx)
     }
+
+    if (gLang) queryParams.set('lang', gLang)
+
 
 
     queryParams.set('bookId', gQueryOptions.bookId)
